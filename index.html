@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Taco Hemingway - mapa miejsc</title>
+
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="map"></div>
+
+<div id="filters">
+  <h3>Filtry</h3>
+
+  <strong>Typ</strong><br>
+  <label><input type="checkbox" id="filter-points" checked> Punkty</label><br>
+  <label><input type="checkbox" id="filter-lines" checked> Ulice</label><br>
+  <label><input type="checkbox" id="filter-districts" checked> Dzielnice</label>
+
+  <hr>
+
+  <strong>Album</strong><br>
+  <label><input type="checkbox" class="filter-album" value="Trójkąt Warszawski" checked> Trójkąt Warszawski</label><br>
+  <label><input type="checkbox" class="filter-album" value="Latarnie wszędzie dawno zgasły" checked> Latarnie wszędzie dawno zgasły</label>
+
+  <hr>
+<button id="random-place" style="width: 100%; padding: 10px; cursor: pointer;">🎲 Losuj miejsce na noc</button>
+<div id="places-list-container" style="margin-top: 15px; max-height: 200px; overflow-y: auto;">
+    <strong>Lista miejsc:</strong>
+    <ul id="places-list" style="list-style: none; padding: 0; font-size: 13px;"></ul>
+</div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/gh/mlevans/leaflet-hash@master/leaflet-hash.js"></script>
+
+<script src="https://unpkg.com/leaflet-search@3.0.2/dist/leaflet-search.min.js"></script>
+
+<script src="https://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

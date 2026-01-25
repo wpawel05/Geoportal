@@ -32,7 +32,7 @@ html, body {
   margin: 8px 0;
 }
 
-/* --- STYLE DLA TRYBU NOCNEGO --- */
+/* STYLE DLA TRYBU NOCNEGO */
 
 /* Panel filtrów */
 body.dark-mode #filters {
@@ -63,12 +63,12 @@ body.dark-mode .leaflet-control-layers-list {
   color: #eee;
 }
 
-/* Poprawka koloru ikonki lupy (jeśli jest obrazkiem, można ją lekko rozjaśnić) */
+/* Poprawka koloru ikonki lupy */
 body.dark-mode .leaflet-control-search .search-icon {
   filter: invert(1);
 }
 
-/* --- POPUPY W TRYBIE NOCNYM --- */
+/* POPUPY W TRYBIE NOCNYM */
 
 /* Główne tło i tekst popupa */
 body.dark-mode .leaflet-popup-content-wrapper,
@@ -92,7 +92,7 @@ body.dark-mode .leaflet-popup-content blockquote {
   margin: 10px 0;
 }
 
-/* Przycisk zamykania popupa (X) */
+/* Przycisk zamykania popupa */
 body.dark-mode .leaflet-popup-close-button {
   color: #fff !important;
 }

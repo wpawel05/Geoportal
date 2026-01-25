@@ -4,7 +4,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Mazowiecka",
+          "name": "Ulica Mazowiecka",
           "album": "Trójkąt Warszawski",
           "song": "(przerywnik)",
           "quote": "Wracam na Mazowiecką, widzę jego chyba [...]",
@@ -301,7 +301,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Świętokrzyska",
+          "name": "Ulica Świętokrzyska",
           "album": "Trójkąt Warszawski",
           "song": "Trójkąt",
           "quote": "Dostać w pysk w Subway'u na Świętokrzyskiej [...]",
@@ -321,7 +321,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Nowy świat",
+          "name": "Ulica Nowy świat",
           "album": "Latarnie wszędzie dawno zgasły",
           "song": "Frascati",
           "quote": "Idę ciemnym Nowym Światem Choć to dla mnie stare śmieci [...]",
@@ -349,7 +349,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Krakowskie Przemieście",
+          "name": "Ulica Krakowskie Przemieście",
           "album": "Trójkąt Warszawski",
           "song": "Trójkąt",
           "quote": "Wracam na Krakowskie i upadam, już sam nie wiem na co [...]",
@@ -371,7 +371,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Karowa",
+          "name": "Ulica Karowa",
           "album": "Trójkąt Warszawski",
           "song": "Trójkąt",
           "quote": "Na Karową już nie wrócę dziś, co za policzek.",
@@ -404,7 +404,7 @@
       {
         "type": "Feature",
         "properties": {
-          "name": "Tamka",
+          "name": "Ulica Tamka",
           "album": "Trójkąt Warszawski",
           "song": "Trójkąt",
           "quote": "Wiruję w dół Karową, by wrócić na górę Tamką.",

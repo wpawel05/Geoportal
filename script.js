@@ -125,25 +125,47 @@ function updateStyles() {
   });
 }
 
+// Lista miejsc
 function updatePlacesList() {
-    const listEl = document.getElementById('places-list');
-    if (!listEl) return;
-    listEl.innerHTML = '';
+  const listEl = document.getElementById('places-list');
+  if (!listEl) return;
+  listEl.innerHTML = '';
 
-    allLayers.forEach(layer => {
-        if (map.hasLayer(layer) && layer.featureData.geometryType === 'Point' && layer.featureData.type !== 'dzielnica') {
-            const li = document.createElement('li');
-            li.style.cursor = 'pointer';
-            li.style.padding = '5px 0';
-            li.innerText = layer.featureData.name;
-            
-            li.onclick = () => {
-                map.flyTo(layer.getLatLng(), 16);
-                layer.openPopup();
-            };
-            listEl.appendChild(li);
-        }
-    });
+  const sortedLayers = [...allLayers].sort((a, b) => 
+      a.featureData.name.localeCompare(b.featureData.name)
+  );
+
+  sortedLayers.forEach(layer => {
+      if (map.hasLayer(layer) && layer.featureData.type !== 'dzielnica') {
+          const li = document.createElement('li');
+          li.style.cursor = 'pointer';
+          li.style.padding = '5px 0';
+          
+          const type = layer.featureData.type;
+          let icon = '📍';
+
+          if (layer.featureData.geometryType === 'LineString') {
+              icon = '🛣️'; 
+          } else {
+              icon = type === 'Lokal Gastronomiczny' ? '🍽️' :
+                     type === 'Klub' ? '🎵' :
+                     type === 'park' ? '🌳' :
+                     type === 'plac' ? '⬛' : '📍';
+          }
+          
+          li.innerText = icon + ' ' + layer.featureData.name;
+          
+          li.onclick = () => {
+              if (layer.getLatLng) {
+                  map.flyTo(layer.getLatLng(), 16);
+              } else if (layer.getBounds) {
+                  map.fitBounds(layer.getBounds(), { padding: [50, 50] });
+              }
+              layer.openPopup();
+          };
+          listEl.appendChild(li);
+      }
+  });
 }
 
 // WCZYTANIE GEOJSON
@@ -172,12 +194,17 @@ fetch('places.geojson')
       }
 
       if (feature.geometry.type === 'LineString') {
-        // Kolory z typeColors
         const color = typeColors[currentMode]['ulica'] || '#0062ff';
         layer = L.geoJSON(feature, {
-          style: { color: color, weight: 7 }
+            style: { color: color, weight: 7 },
+            onEachFeature: function (feature, l) {
+                // To jest klucz! Przypisujemy tytuł bezpośrednio do wewnętrznej warstwy linii
+                l.options.title = feature.properties.name;
+            }
         });
-      }
+        // Przypisujemy też tytuł do głównego kontenera dla pewności
+        layer.options.title = feature.properties.name;
+    }
 
       if (!layer) return;
 
@@ -200,7 +227,7 @@ fetch('places.geojson')
       };
 
       layer.addTo(map);
-      if (feature.geometry.type === 'Point') layer.addTo(searchLayer);
+      if (layer.featureData.type !== 'dzielnica') layer.addTo(searchLayer);
       allLayers.push(layer);
     });
 
@@ -228,12 +255,12 @@ function applyFilters() {
     if (typeOk && albumOk) {
       if (!map.hasLayer(layer)) {
         layer.addTo(map);
-        if (geometryType === 'Point') layer.addTo(searchLayer);
+        if (type !== 'dzielnica') layer.addTo(searchLayer);
       }
     } else {
       if (map.hasLayer(layer)) {
         map.removeLayer(layer);
-        if (geometryType === 'Point') searchLayer.removeLayer(layer);
+        searchLayer.removeLayer(layer);
       }
     }
   });
@@ -246,16 +273,20 @@ function applyFilters() {
 const randomBtn = document.getElementById('random-place');
 if (randomBtn) {
     randomBtn.addEventListener('click', () => {
-        const points = allLayers.filter(l => 
-            l.featureData.geometryType === 'Point' && 
+        const visibleElements = allLayers.filter(l => 
             l.featureData.type !== 'dzielnica' &&
             map.hasLayer(l)
         );
 
-        if (points.length > 0) {
-            const randomMarker = points[Math.floor(Math.random() * points.length)];
-            map.flyTo(randomMarker.getLatLng(), 16);
-            randomMarker.openPopup();
+        if (visibleElements.length > 0) {
+            const randomElement = visibleElements[Math.floor(Math.random() * visibleElements.length)];
+            
+            if (randomElement.getLatLng) {
+                map.flyTo(randomElement.getLatLng(), 16);
+            } else if (randomElement.getBounds) {
+                map.fitBounds(randomElement.getBounds(), { padding: [50, 50] });
+            }
+            randomElement.openPopup();
         }
     });
 }
@@ -268,7 +299,7 @@ map.on('popupopen', function(e) {
     if (audio) { audio.volume = 0.3; }
 });
 
-//  Zapamiętywanie lokalizacji
+// Zapamiętywanie lokalizacji
 const hash = new L.Hash(map);
 
 // Wyszukiwarka miejsc
@@ -276,12 +307,20 @@ const searchControl = new L.Control.Search({
     layer: searchLayer,
     propertyName: 'title',
     marker: false,
+    initial: false,
     moveToLocation: function(latlng, title, map) {
-        map.setView(latlng, 16);
+        if (latlng) {
+            map.setView(latlng, 16);
+        }
     }
 });
 
 searchControl.on('search:locationfound', function(e) {
+    if (e.layer.getLatLng) {
+        map.flyTo(e.layer.getLatLng(), 16);
+    } else if (e.layer.getBounds) {
+        map.fitBounds(e.layer.getBounds(), { padding: [50, 50] });
+    }
     e.layer.openPopup();
 });
 map.addControl(searchControl);

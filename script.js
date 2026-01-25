@@ -1,7 +1,7 @@
-// ===== MAPA =====
+// MAPA
 const map = L.map('map').setView([52.2375, 21.0131], 13);
 
-// ===== MAPY BAZOWE =====
+// MAPY BAZOWE
 const osm = L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   { attribution: '&copy; OpenStreetMap contributors' }
@@ -23,13 +23,13 @@ const dark = L.tileLayer(
 
 osm.addTo(map);
 
-// DODANE: Warstwa Heatmapy (pusta na start)
+//Warstwa Heatmapy
 let heatLayer = L.heatLayer([], {
-    radius: 80,        // Zwiększony z 25 - plamy będą większe i bardziej połączone
-    blur: 50,          // Rozmycie krawędzi dla efektu "płynności"
-    maxZoom: 15,       // Przy jakim przybliżeniu intensywność jest największa
-    max: 2,          // Maksymalna siła pojedynczego punktu
-    gradient: {        // Ładniejsze przejścia kolorów (od zimnych do gorących)
+    radius: 80,
+    blur: 50,
+    maxZoom: 15,
+    max: 2,
+    gradient: {
         0.2: 'blue', 
         0.4: 'cyan', 
         0.6: 'lime', 
@@ -51,7 +51,7 @@ L.control.layers(
   { position: 'topleft' }
 ).addTo(map);
 
-// ===== KONFIGURACJA KOLORÓW =====
+// KONFIGURACJA KOLORÓW
 const typeColors = {
   light: {
     'dzielnica': '#4CAF50',
@@ -77,7 +77,7 @@ let currentMode = 'light';
 const allLayers = [];
 const searchLayer = L.layerGroup().addTo(map);
 
-// ===== FUNKCJE POMOCNICZE =====
+// FUNKCJE POMOCNICZE
 
 function createColoredIcon(type) {
   const color = typeColors[currentMode][type] || typeColors[currentMode]['inne'];
@@ -146,7 +146,7 @@ function updatePlacesList() {
     });
 }
 
-// ===== WCZYTANIE GEOJSON =====
+// WCZYTANIE GEOJSON
 fetch('places.geojson')
   .then(r => r.json())
   .then(data => {
@@ -172,7 +172,7 @@ fetch('places.geojson')
       }
 
       if (feature.geometry.type === 'LineString') {
-        // Poprawka: kolory pobierane z typeColors[light] na starcie
+        // Kolory z typeColors
         const color = typeColors[currentMode]['ulica'] || '#0062ff';
         layer = L.geoJSON(feature, {
           style: { color: color, weight: 7 }
@@ -208,7 +208,7 @@ fetch('places.geojson')
     updatePlacesList();
   });
 
-// ===== FILTROWANIE =====
+// FILTROWANIE
 function applyFilters() {
   const showPoints = document.getElementById('filter-points').checked;
   const showLines  = document.getElementById('filter-lines').checked;
@@ -240,7 +240,7 @@ function applyFilters() {
   updatePlacesList();
 }
 
-// ===== DODATKI I LISTENERY =====
+// DODATKI I LISTENERY
 
 // Losowanie miejsca
 const randomBtn = document.getElementById('random-place');
@@ -262,13 +262,16 @@ if (randomBtn) {
 
 document.querySelectorAll('#filters input').forEach(el => el.addEventListener('change', applyFilters));
 
+// Startowa głośność
 map.on('popupopen', function(e) {
     const audio = e.popup.getElement().querySelector('audio');
     if (audio) { audio.volume = 0.3; }
 });
 
+//  Zapamiętywanie lokalizacji
 const hash = new L.Hash(map);
 
+// Wyszukiwarka miejsc
 const searchControl = new L.Control.Search({
     layer: searchLayer,
     propertyName: 'title',
@@ -283,6 +286,7 @@ searchControl.on('search:locationfound', function(e) {
 });
 map.addControl(searchControl);
 
+// Tryb nocny
 map.on('baselayerchange', function(e) {
   if (e.name === 'Tryb Nocny') {
       currentMode = 'dark';

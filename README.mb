@@ -1,0 +1,16 @@
+# Taco Hemingway - Mapa Warszawskich Lokalizacji z Tekstów Piosenek
+
+Interaktywna aplikacja Web GIS wizualizująca miejsca wspomniane w twórczości Taco Hemingwaya. Projekt łączy analizę tekstów kultury z nowoczesnymi narzędziami geoinformacyjnymi.
+
+# Wykorzystane technologie i biblioteki:
+* Leaflet.js – główny silnik mapowy.
+* Leaflet.heat – implementacja dynamicznej heatmapy (gęstość wzmianek).
+* Leaflet-search – wyszukiwarka obiektów z autouzupełnianiem.
+* Leaflet-hash – synchronizacja stanu mapy (zoom/lat/lon) z adresem URL.
+* GeoJSON – format przechowywania danych przestrzennych (punkty, linie, poligony).
+
+# Kluczowe funkcjonalności:
+* Multi-layer Support: Przełączanie między podkładami OSM, Satelitarnym oraz dedykowanym Trybem Nocnym (CartoDB Dark).
+* Zaawansowane Popupy: Integracja multimediów (audio, obrazy) oraz cytatów z tekstów utworów.
+* System Filtrowania: Dynamiczne filtrowanie obiektów według typu (ulice, lokale, dzielnice) oraz albumów.
+* Analiza Przestrzenna: Wizualizacja skupisk miejsc za pomocą algorytmu heatmapy.

@@ -15,3 +15,5 @@ Interaktywna aplikacja Web GIS wizualizująca miejsca wspomniane w twórczości 
 * Zaawansowane Popupy: Integracja multimediów (audio, obrazy) oraz cytatów z tekstów utworów.
 * System Filtrowania: Dynamiczne filtrowanie obiektów według typu (ulice, lokale, dzielnice) oraz albumów.
 * Analiza Przestrzenna: Wizualizacja skupisk miejsc za pomocą algorytmu heatmapy.
+
+![Podgląd aplikacji](img/screen_geoportal.png)

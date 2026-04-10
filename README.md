@@ -1,3 +1,4 @@
+
 # Taco Hemingway - Mapa Warszawskich Lokalizacji z Tekstów Piosenek
 
 Interaktywna aplikacja Web GIS wizualizująca miejsca wspomniane w twórczości Taco Hemingwaya. Projekt łączy analizę tekstów kultury z nowoczesnymi narzędziami geoinformacyjnymi.
